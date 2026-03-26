@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin - Enerion Player</title>
+    <link rel="stylesheet" href="../assets/css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Enerion Player</h1>
+                <p>Painel Administrativo</p>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        placeholder="Digite seu usuário"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Digite sua senha"
+                        required
+                    >
+                </div>
+                
+                <button type="submit" class="btn-submit">
+                    <span>Entrar</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+            
+            <div class="auth-footer">
+                <p>Não é administrador? <a href="../revendedor/login.html">Acesse como Revendedor</a></p>
+                <p><a href="../public/index.html">Voltar à Home</a></p>
+            </div>
+        </div>
+        
+        <div class="auth-background">
+            <div class="gradient-1"></div>
+            <div class="gradient-2"></div>
+        </div>
+    </div>
+    
+    <script src="../assets/js/auth.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const submitBtn = this.querySelector('button[type="submit"]');
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Carregando...';
+            
+            try {
+                const response = await fetch('/api/auth/login-admin.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    localStorage.setItem('auth_token', data.token);
+                    localStorage.setItem('user_type', 'admin');
+                    localStorage.setItem('user_id', data.admin.id);
+                    localStorage.setItem('user_username', data.admin.username);
+                    window.location.href = './dashboard.html';
+                } else {
+                    showNotification(data.message || 'Erro ao fazer login', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Entrar</span><i class="fas fa-arrow-right"></i>';
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                showNotification('Erro ao conectar ao servidor', 'error');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Entrar</span><i class="fas fa-arrow-right"></i>';
+            }
+        });
+    </script>
+</body>
+</html>

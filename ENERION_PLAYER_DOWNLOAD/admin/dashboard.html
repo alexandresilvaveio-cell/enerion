@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Enerion Player</title>
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Enerion Player</h2>
+                <p>Admin</p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#revendedores" class="nav-item" data-page="revendedores">
+                    <i class="fas fa-users"></i>
+                    <span>Revendedores</span>
+                </a>
+                <a href="#dispositivos" class="nav-item" data-page="dispositivos">
+                    <i class="fas fa-tv"></i>
+                    <span>Dispositivos</span>
+                </a>
+                <a href="#codigos" class="nav-item" data-page="codigos">
+                    <i class="fas fa-key"></i>
+                    <span>Códigos DNS</span>
+                </a>
+                <a href="#logs" class="nav-item" data-page="logs">
+                    <i class="fas fa-history"></i>
+                    <span>Logs</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- HEADER -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <button class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 id="pageTitle">Dashboard</h1>
+                </div>
+                
+                <div class="header-right">
+                    <div class="user-profile">
+                        <span id="userName">Admin</span>
+                        <img src="https://via.placeholder.com/40" alt="Avatar">
+                    </div>
+                </div>
+            </header>
+            
+            <!-- CONTEÚDO DAS PÁGINAS -->
+            <div class="page-content">
+                <!-- Dashboard Page -->
+                <div id="dashboard-page" class="page active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(255, 68, 68, 0.2);">
+                                <i class="fas fa-users" style="color: #ff4444;"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Total Revendedores</h3>
+                                <p id="totalRevs" class="stat-value">0</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(0, 255, 0, 0.2);">
+                                <i class="fas fa-tv" style="color: #00ff00;"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Dispositivos Online</h3>
+                                <p id="devicesOnline" class="stat-value">0</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(255, 170, 0, 0.2);">
+                                <i class="fas fa-key" style="color: #ffaa00;"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Códigos Ativos</h3>
+                                <p id="codigosAtivos" class="stat-value">0</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(100, 200, 255, 0.2);">
+                                <i class="fas fa-history" style="color: #64c8ff;"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Eventos Hoje</h3>
+                                <p id="eventosHoje" class="stat-value">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Revendedores Page -->
+                <div id="revendedores-page" class="page">
+                    <div class="page-header">
+                        <h2>Gerenciar Revendedores</h2>
+                        <button id="addRevBtn" class="btn-primary">
+                            <i class="fas fa-plus"></i> Novo Revendedor
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="revsTable" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Usuário</th>
+                                    <th>Telefone</th>
+                                    <th>Status</th>
+                                    <th>Apps</th>
+                                    <th>Códigos</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="revsTableBody">
+                                <tr>
+                                    <td colspan="7" style="text-align: center; padding: 2rem;">
+                                        <i class="fas fa-spinner fa-spin"></i> Carregando...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Dispositivos Page -->
+                <div id="dispositivos-page" class="page">
+                    <div class="page-header">
+                        <h2>Monitorar Dispositivos</h2>
+                        <div class="filter-group">
+                            <input type="text" id="deviceFilter" placeholder="Filtrar por Device ID ou IP..." class="filter-input">
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="devicesTable" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Device ID</th>
+                                    <th>Revendedor</th>
+                                    <th>IP</th>
+                                    <th>Status</th>
+                                    <th>Último Ping</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="devicesTableBody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 2rem;">
+                                        <i class="fas fa-spinner fa-spin"></i> Carregando...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Códigos DNS Page -->
+                <div id="codigos-page" class="page">
+                    <div class="page-header">
+                        <h2>Gerenciar Códigos DNS</h2>
+                        <button id="addCodigoBtn" class="btn-primary">
+                            <i class="fas fa-plus"></i> Novo Código
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="codigosTable" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Revendedor</th>
+                                    <th>Status</th>
+                                    <th>Dispositivos</th>
+                                    <th>Criado em</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="codigosTableBody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 2rem;">
+                                        <i class="fas fa-spinner fa-spin"></i> Carregando...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Logs Page -->
+                <div id="logs-page" class="page">
+                    <div class="page-header">
+                        <h2>Logs do Sistema</h2>
+                        <div class="filter-group">
+                            <select id="logFilter" class="filter-input">
+                                <option value="">Todos os Tipos</option>
+                                <option value="LOGIN_ADMIN">Login Admin</option>
+                                <option value="LOGIN_REV">Login Revendedor</option>
+                                <option value="CREATE_REV">Criar Revendedor</option>
+                                <option value="DELETE_REV">Deletar Revendedor</option>
+                                <option value="CREATE_CODIGO">Criar Código</option>
+                                <option value="DELETE_CODIGO">Deletar Código</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="logsTable" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Descrição</th>
+                                    <th>IP</th>
+                                    <th>Data/Hora</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logsTableBody">
+                                <tr>
+                                    <td colspan="4" style="text-align: center; padding: 2rem;">
+                                        <i class="fas fa-spinner fa-spin"></i> Carregando...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- MODAIS -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Modal</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div id="modalBody" class="modal-body">
+                <!-- Conteúdo dinâmico -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- NOTIFICAÇÃO -->
+    <div id="notification" class="notification"></div>
+    
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+</body>
+</html>

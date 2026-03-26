@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Revendedor - Enerion Player</title>
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Enerion Player</h2>
+                <p>Revendedor</p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#codigos" class="nav-item" data-page="codigos">
+                    <i class="fas fa-key"></i>
+                    <span>Meus Códigos DNS</span>
+                </a>
+                <a href="#dispositivos" class="nav-item" data-page="dispositivos">
+                    <i class="fas fa-tv"></i>
+                    <span>Meus Dispositivos</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- HEADER -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <button class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>Dashboard</h1>
+                </div>
+                
+                <div class="header-right">
+                    <div class="user-profile">
+                        <span id="userName">Revendedor</span>
+                        <img src="https://via.placeholder.com/40" alt="Avatar">
+                    </div>
+                </div>
+            </header>
+            
+            <!-- CONTEÚDO DAS PÁGINAS -->
+            <div class="page-content">
+                <!-- Dashboard Page -->
+                <div id="dashboard-page" class="page active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(255, 68, 68, 0.2);">
+                                <i class="fas fa-key" style="color: #ff4444;"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Meus Códigos</h3>
+                                <p id="meusCodigos" class="stat-value">0</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(0, 255, 0, 0.2);">
+                                <i class="fas fa-tv" style="color: #00ff00;"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Apps Ativos</h3>
+                                <p id="meuAppsAtivos" class="stat-value">0</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(255, 170, 0, 0.2);">
+                                <i class="fas fa-globe" style="color: #ffaa00;"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Apps Online</h3>
+                                <p id="meuAppsOnline" class="stat-value">0</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background: rgba(100, 200, 255, 0.2);">
+                                <i class="fas fa-chart-bar" style="color: #64c8ff;"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Limite de Apps</h3>
+                                <p id="meuLimite" class="stat-value">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Meus Códigos DNS Page -->
+                <div id="codigos-page" class="page">
+                    <div class="page-header">
+                        <h2>Meus Códigos DNS</h2>
+                        <button id="addCodigoBtn" class="btn-primary">
+                            <i class="fas fa-plus"></i> Novo Código
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="codigosTable" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Status</th>
+                                    <th>Apps Conectados</th>\n                                    <th>Criado em</th>\n                                    <th>Ações</th>\n                                </tr>\n                            </thead>\n                            <tbody id=\"codigosTableBody\">\n                                <tr>\n                                    <td colspan=\"5\" style=\"text-align: center; padding: 2rem;\">\n                                        <i class=\"fas fa-spinner fa-spin\"></i> Carregando...\n                                    </td>\n                                </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                </div>\n                \n                <!-- Meus Dispositivos Page -->\n                <div id=\"dispositivos-page\" class=\"page\">\n                    <div class=\"page-header\">\n                        <h2>Meus Dispositivos</h2>\n                    </div>\n                    \n                    <div class=\"table-container\">\n                        <table id=\"devicesTable\" class=\"data-table\">\n                            <thead>\n                                <tr>\n                                    <th>Device ID</th>\n                                    <th>Modelo</th>\n                                    <th>IP</th>\n                                    <th>Status</th>\n                                    <th>Último Ping</th>\n                                    <th>Código</th>\n                                </tr>\n                            </thead>\n                            <tbody id=\"devicesTableBody\">\n                                <tr>\n                                    <td colspan=\"6\" style=\"text-align: center; padding: 2rem;\">\n                                        <i class=\"fas fa-spinner fa-spin\"></i> Carregando...\n                                    </td>\n                                </tr>\n                            </tbody>\n                        </table>\n                    </div>\n                </div>\n            </div>\n        </main>\n    </div>\n    \n    <!-- MODAIS -->\n    <div id=\"modal\" class=\"modal\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <h2 id=\"modalTitle\">Modal</h2>\n                <button class=\"modal-close\">&times;</button>\n            </div>\n            <div id=\"modalBody\" class=\"modal-body\">\n                <!-- Conteúdo dinâmico -->\n            </div>\n        </div>\n    </div>\n    \n    <script src=\"../assets/js/auth.js\"></script>\n    <script src=\"../assets/js/revendedor-dashboard.js\"></script>\n</body>\n</html>\n
